@@ -1,0 +1,167 @@
+create sequence categories_seq start with 1 increment by 50;
+create sequence countries_seq start with 1 increment by 50;
+create sequence orderitems_seq start with 1 increment by 50;
+create sequence orders_seq start with 1 increment by 50;
+create sequence payments_seq start with 1 increment by 50;
+create sequence products_seq start with 1 increment by 50;
+create sequence shopping_cart_seq start with 1 increment by 50;
+create sequence users_seq start with 1 increment by 50;
+
+
+CREATE TABLE categories (
+                            id NUMBER(19) NOT NULL,
+                            category_name VARCHAR2(255),
+                            category_description VARCHAR2(255),
+                            department CHAR(2) CHECK (department IN ('AC', 'CL', 'EX')),
+                            PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE countries (
+                           id NUMBER(19) NOT NULL,
+                           city_name VARCHAR2(255),
+                           iso2code VARCHAR2(2),
+                           area_code NUMBER(3) CHECK (area_code BETWEEN 1 AND 999),
+                           PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE orderitems (
+                            id NUMBER(19) NOT NULL,
+                            quantity NUMBER CHECK (quantity >= 1),
+                            price FLOAT(53) NOT NULL CHECK (price >= 1),
+                            product_id NUMBER(19),
+                            PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE orders (
+                        id NUMBER(19) NOT NULL,
+                        quantity NUMBER CHECK (quantity >= 1),
+                        order_date DATE,
+                        status CHAR(1) CHECK (status IN ('P', 'S', 'D', 'C')),
+                        total_price FLOAT(53),
+                        shipping_date DATE,
+                        delivery_date DATE,
+                        payment_id NUMBER(19),
+                        user_id NUMBER(19),
+                        PRIMARY KEY (id)
+);
+
+create table orders_order_items
+(
+    orderitems_idx  NUMBER(19) not null,
+    order_items_id  NUMBER(19)  not null unique,
+    order_id        NUMBER(19)  not null,
+    constraint U_orders_orderitems primary key (order_id, orderitems_idx)
+);
+
+CREATE TABLE payments (
+                          id NUMBER(19) NOT NULL,
+                          payment_date DATE,
+                          payment_amount FLOAT(53) NOT NULL,
+                          payment_method VARCHAR2(255),
+                          payment_status CHAR(1) CHECK (payment_status IN ('O', 'P')),
+                          PRIMARY KEY (id)
+);
+
+create table product_categories
+(
+    product_id    NUMBER(19) NOT NULL,
+    category_idx  integer not null,
+    categories_id NUMBER(19) NOT NULL,
+    constraint U_product_categories primary key (product_id, category_idx)
+);
+
+
+create table product_image
+(
+    product_id NUMBER(19) NOT NULL,
+    order_idx  integer not null,
+    image_name varchar(255),
+    primary key (product_id, order_idx )
+);
+create table products
+(
+    id                  NUMBER(19) NOT NULL,
+    product_name        varchar(255),
+    product_description varchar(255),
+    product_price       integer not null,
+    product_quantity    integer,
+    primary key (id)
+);
+
+create table shopping_cart
+(
+    id  NUMBER(19) NOT NULL,
+    primary key (id)
+);
+
+create table shopping_cart_products
+(
+    shopping_cart_id NUMBER(19) NOT NULL,
+    product_id      NUMBER(19) NOT NULL,
+    constraint U_shopping_cart_products unique (shopping_cart_id, product_id)
+);
+
+create table user_addresses
+(
+    user_id      NUMBER(19) NOT NULL,
+    order_idx    integer not null,
+    street       varchar(255),
+    city         varchar(255),
+    house_number integer,
+    door_number  integer,
+    postal_code  integer,
+    country_id   NUMBER(19) NOT NULL,
+    address_type char(2) check(address_type in ('BI', 'DE', 'PR')) not null,
+    primary key (user_id, order_idx)
+);
+
+-- kommt nicht mehr, da email als String
+-- create table user_email_addresses
+-- (
+--     user_id       NUMBER(19) NOT NULL,
+--     order_idx     integer not null,
+--     email_address varchar(255),
+--     primary key (user_id, order_idx)
+-- );
+
+create table users
+(
+    id                  NUMBER(19) NOT NULL,
+    first_name          varchar(255),
+    last_name           varchar(255),
+    email_Address       varchar(255),
+    username            varchar(255),
+    encoded_password    varchar(255) not null,
+    user_role           char(1) check (user_role in('A', 'C', 'G','O')) not null,
+    street              varchar(255),
+    house_number        integer,
+    door_number         integer,
+    city                varchar(255),
+    postal_code         integer,
+    address_type        char(2) check(address_type in  ('BI', 'DE', 'PR')),
+    phone_country_code  integer check (phone_country_code between 1 and 999),
+    phone_area_code     integer,
+    phone_serial_number varchar(255),
+    phone_extension     integer,
+    country_id          NUMBER(19),
+    primary key (id)
+);
+-- CONSTRAINTS
+ALTER TABLE orderitems ADD CONSTRAINT FK_orderitems_2_products FOREIGN KEY (product_id) REFERENCES products(id);
+ALTER TABLE orders ADD CONSTRAINT FK_orders_2_payment FOREIGN KEY (payment_id) REFERENCES payments(id);
+ALTER TABLE orders ADD CONSTRAINT FK_orders_2_users FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE orders_order_items ADD CONSTRAINT FK_orderitems_2_orderitems FOREIGN KEY (order_items_id) REFERENCES orderitems(id);
+ALTER TABLE orders_order_items ADD CONSTRAINT FK_orderitems_2_orders FOREIGN KEY (order_id) REFERENCES orders(id);
+ALTER TABLE product_categories ADD CONSTRAINT FK_product_categories_2_categories FOREIGN KEY (categories_id) REFERENCES categories(id);
+ALTER TABLE product_categories ADD CONSTRAINT FK_product_categories_2_products FOREIGN KEY (product_id) REFERENCES products(id);
+ALTER TABLE product_image ADD CONSTRAINT FK_product_image_2_products FOREIGN KEY (product_id) REFERENCES products(id);
+ALTER TABLE user_addresses ADD CONSTRAINT FK_addresses_2_countries FOREIGN KEY (country_id) REFERENCES countries(id);
+ALTER TABLE user_addresses ADD CONSTRAINT FK_user_addresses_2_users FOREIGN KEY (user_id) REFERENCES users(id);
+-- ALTER TABLE user_email_addresses ADD CONSTRAINT FK_user_email_addresses_2_users FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE users ADD CONSTRAINT FK_user_main_address_2_countries FOREIGN KEY (country_id) REFERENCES countries(id);

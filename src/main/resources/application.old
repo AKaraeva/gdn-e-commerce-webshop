@@ -1,0 +1,35 @@
+# Database configuration
+spring.datasource.url=jdbc:oracle:thin:@//localhost:1521/gdnDB
+spring.datasource.username=gdn
+spring.datasource.password=oracle
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+app.main.db.port=1521
+
+# Server configuration
+server.port=8081
+
+#Vaadin configuration
+vaadin.launch-browser=true
+vaadin.allowed-packages=com.vaadin,org.vaadin,at.gdn
+vaadin.pnpm.enable=true
+vaadin.theme=gdn
+
+# JPA configuration
+spring.jpa.open-in-view=false
+spring.jpa.properties.ddl-auto=validate
+
+
+#spring.flyway.enabled=true
+#spring.flyway.locations=classpath:db/migration
+#spring.flyway.out-of-order=true
+#testcontainers.docker.host=tcp://10.50.5.118:2375
+#docker.host=tcp://10.50.5.118:2375
+
+#spring.jpa.database-platform=org.hibernate.dialect.Oracle12cDialect
+
+#spring.jpa.properties.jakarta.persistence.schema-generation.create-database-schemas=true
+#spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=drop-and-create
+#spring.jpa.properties.jakarta.persistence.schema-generation.scripts.drop-target=src/sql/drop-schema.sql
+#spring.jpa.properties.jakarta.persistence.schema-generation.scripts.create-target=src/sql/create-schema.sql
+#spring.jpa.properties.jakarta.persistence.schema-generation.create-source=metadata
+#spring.jpa.properties.jakarta.persistence.schema-generation.drop-source=metadata

@@ -1,0 +1,182 @@
+d@startuml
+
+hide empty attributes
+hide empty methods
+
+entity User {
+    - userId: Long
+    - firstName: FirstName
+    - lastName: LastName
+    - userName: UserName
+    - emailAddress: Email
+    - encodedPassword: String
+    - phoneNumber: PhoneNumber
+    - address: List<Address>
+    - userRole: UserRole
+}
+
+class FirstName <<RichType>> << (R, lightblue) >> {
+    value: String
+}
+class LastName <<RichType>> << (R, lightblue) >> {
+    value: String
+}
+
+class UserName <<RichType>> << (R, lightblue) >> {
+    value: String
+}
+
+enum UserRole <<ENUM>> <<(E, YELLOW)>> {
+          ADMIN
+          CUSTOMER
+          GUEST
+          OPERATOR
+}
+
+entity Product {
+    - productId: Long
+    - productName: String
+    - productDescription: String
+    - productPrice: double
+    - productQuantity: Integer
+    - productImage: List<ProductImage>
+    - category: List<Category>
+}
+
+entity ProductInventory {
+    - productInventoryId: Long
+    - product: List<Product>
+}
+
+entity ShoppingCart {
+    - shoppingCartId: Long
+    - product: List<Product>
+}
+
+
+entity Order {
+   - orderId: Long
+   - quantity: Integer
+   - orderDate: LocalDate
+   - status: OrderStatus
+   - totalPrice: Double
+   - shippingDate: LocalDate
+   - deliveryDate: LocalDate
+   - orderItems: List<OrderItems>
+   - payment: Payment
+   - user: User
+}
+
+class PhoneNumber<<ValueObject>> << (V, #BB3399) >> {
+    - countryCode: Integer
+    - areaCode: Integer
+    - serialNumber: String
+    - extensions: Integer
+}
+
+class ProductImage<<ValueObject>> << (V, #BB3399) >> {
+    - imageName: String
+}
+
+class Email<<ValueObject>> << (V, #BB3399) >> {
+    - emailAddress: String
+}
+
+class Address<<ValueObject>> << (V, BB3399) >> {
+    -street: String
+    -houseNumber: Integer
+    -doorNumber: Integer
+    -city: String
+    -postalCode: Integer
+    -addressType: AddressType
+    -country: Country
+}
+
+enum AddressType <<ENUM>> <<(E, YELLOW)>> {
+          BILLING
+          DELIVERY
+          PRIVATE
+}
+
+entity Country {
+    - countryId: Long
+    - cityName: String
+    - iso2Code: String
+    - areaCode: Integer
+}
+
+entity Category {
+    - categoryId: Long
+    - categoryName: String
+    - categoryDescription: String
+    - department: Department
+}
+
+enum Department <<ENUM>> <<(E, YELLOW)>> {
+    CLOTHING
+    ACCESSORIES
+    EXTRAS
+}
+
+entity OrderItems {
+    - orderItemsId: Long
+    - quantity: Integer
+    - price: double
+    - product: Product
+}
+
+entity Payment {
+    - paymentId: Long
+    - paymentDate: LocalDate
+    - paymentAmount: double
+    - paymentMethod: PaymentMethod
+    - paymentStatus: PaymentStatus
+}
+
+enum PaymentMethod <<ENUM>> <<(E, YELLOW)>> {
+    CREDITCARD
+    PAYPAL
+    WIRETRANSFER
+}
+
+enum OrderStatus <<ENUM>> <<(E, YELLOW)>> {
+    PENDING
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}
+
+enum PaymentStatus <<ENUM>> <<(E, YELLOW)>> {
+    OPEN
+    PAID
+}
+
+' Relations'
+Product o-down- Category
+
+Product -down-> ProductImage : < embedded
+ProductInventory o-down- Product
+ShoppingCart o-down- Product
+Category .down.> Department : < embedded
+
+User .up.> UserRole : < embedded
+User --> PhoneNumber : < embedded
+User -down-> Email : < embedded
+User .up.> FirstName
+User .up.> LastName
+User .up.> UserName
+
+Order .up.> OrderStatus : < embedded
+
+OrderItems o-down- Product
+OrderItems -down-* Order
+Order -up-> User
+
+Address -left-* User
+Address -down-> Country
+Address .up.> AddressType : < embedded
+Payment .down.> PaymentMethod : < embedded
+Payment .down.> PaymentStatus : < embedded
+
+Order -down-> Payment
+@enduml

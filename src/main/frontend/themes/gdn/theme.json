@@ -1,0 +1,11 @@
+{
+  "applicationTheme" : "gdn",
+
+  "lumoImports": [
+    "typography",
+    "color",
+    "spacing",
+    "badge",
+    "utility"
+  ]
+}

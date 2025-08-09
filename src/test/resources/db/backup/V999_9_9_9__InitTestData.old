@@ -1,0 +1,119 @@
+
+INSERT INTO products (id, product_name, product_description, product_price, product_quantity)
+VALUES (products_seq.NEXTVAL, 'USB 1', 'Farbe ROT - speichert viele Daten - 1 GB', 14.99, 40);
+INSERT INTO products (id, product_name, product_description, product_price, product_quantity)
+VALUES (products_seq.NEXTVAL, 'USB 2', 'Farbe BLAU - schnell und zuverlässig - 2 GB', 19.99, 50);
+INSERT INTO products (id, product_name, product_description, product_price, product_quantity)
+VALUES (products_seq.NEXTVAL, 'USB 3', 'Farbe GRÜN - kompakt und langlebig - 4 GB', 24.99, 30);
+INSERT INTO products (id, product_name, product_description, product_price, product_quantity)
+VALUES (products_seq.NEXTVAL, 'USB 4', 'Farbe SCHWARZ - super schneller Speicher - 8 GB', 29.99, 25);
+INSERT INTO products (id, product_name, product_description, product_price, product_quantity)
+VALUES (products_seq.NEXTVAL, 'USB 5', 'Farbe WEISS - stylisch und robust - 16 GB', 34.99, 20);
+
+
+INSERT INTO categories (id, category_name, category_description, department)
+VALUES (categories_seq.NEXTVAL, 'EXTRAS', 'USB - Massenspeicher', 'EX');
+INSERT INTO categories (id, category_name, category_description, department)
+VALUES (categories_seq.NEXTVAL, 'CLOTHING', 'Clothing', 'CL');
+INSERT INTO categories (id, category_name, category_description, department)
+VALUES (categories_seq.NEXTVAL, 'EXTRAS', 'Accessoires', 'EX');
+INSERT INTO categories (id, category_name, category_description, department)
+VALUES (categories_seq.NEXTVAL, 'CLOTHING', 'GDN T-Shirt', 'AC');
+INSERT INTO categories (id, category_name, category_description, department)
+VALUES (categories_seq.NEXTVAL, 'EXTRAS', 'Regenschirm', 'EX');
+
+
+
+INSERT INTO payments (id, payment_date, payment_amount, payment_method, payment_status)
+VALUES (payments_seq.NEXTVAL, TO_DATE('2021-01-01', 'YYYY-MM-DD'), 100.00, 'CC', 'P');
+INSERT INTO payments (id, payment_date, payment_amount, payment_method, payment_status)
+VALUES (payments_seq.NEXTVAL, TO_DATE('2021-02-01', 'YYYY-MM-DD'), 150.00, 'CC', 'P');
+INSERT INTO payments (id, payment_date, payment_amount, payment_method, payment_status)
+VALUES (payments_seq.NEXTVAL, TO_DATE('2021-03-01', 'YYYY-MM-DD'), 200.00, 'PP', 'O');
+INSERT INTO payments (id, payment_date, payment_amount, payment_method, payment_status)
+VALUES (payments_seq.NEXTVAL, TO_DATE('2021-04-01', 'YYYY-MM-DD'), 250.00, 'WT', 'P');
+INSERT INTO payments (id, payment_date, payment_amount, payment_method, payment_status)
+VALUES (payments_seq.NEXTVAL, TO_DATE('2021-05-01', 'YYYY-MM-DD'), 300.00, 'PP', 'O');
+
+
+INSERT INTO product_image (product_id, order_idx, image_name)
+VALUES (1, 1, '/images/pen.jpg');
+INSERT INTO product_image (product_id, order_idx, image_name)
+VALUES (51, 2, 'images/shirt.jpg');
+INSERT INTO product_image (product_id, order_idx, image_name)
+VALUES (101, 3, '/images/shirt.jpg');
+INSERT INTO product_image (product_id, order_idx, image_name)
+VALUES (151, 4, '/images/shirt.jpg');
+INSERT INTO product_image (product_id, order_idx, image_name)
+VALUES (201, 5, '/images/pen.jpg');
+
+
+
+
+INSERT INTO shopping_cart(id)
+VALUES (shopping_cart_seq.NEXTVAL);
+
+INSERT INTO shopping_cart_products(product_id, shopping_cart_id)
+VALUES (1,1);
+
+
+
+
+
+INSERT INTO countries (id, city_name, iso2code, area_code)
+VALUES (countries_seq.NEXTVAL, 'Vienna', 'AT', 43);
+INSERT INTO countries (id, city_name, iso2code, area_code)
+VALUES (countries_seq.NEXTVAL, 'Graz', 'AT', 45);
+INSERT INTO countries (id, city_name, iso2code, area_code)
+VALUES (countries_seq.NEXTVAL, 'Linz', 'AT', 33);
+INSERT INTO countries (id, city_name, iso2code, area_code)
+VALUES (countries_seq.NEXTVAL, 'Salzburg', 'AT', 41);
+INSERT INTO countries (id, city_name, iso2code, area_code)
+VALUES (countries_seq.NEXTVAL, 'Tirol', 'AT', 33);
+
+
+INSERT INTO orders (id, quantity, order_date, status, total_price, shipping_date, delivery_date)
+VALUES (orders_seq.NEXTVAL, 50, TO_DATE('2021-01-01', 'YYYY-MM-DD'), 'P', 100.00, TO_DATE('2021-01-02', 'YYYY-MM-DD'), TO_DATE('2021-01-03', 'YYYY-MM-DD'));
+INSERT INTO orders (id, quantity, order_date, status, total_price, shipping_date, delivery_date)
+VALUES (orders_seq.NEXTVAL, 40, TO_DATE('2021-02-01', 'YYYY-MM-DD'), 'C', 80.00, TO_DATE('2021-02-02', 'YYYY-MM-DD'), TO_DATE('2021-02-03', 'YYYY-MM-DD'));
+INSERT INTO orders (id, quantity, order_date, status, total_price, shipping_date, delivery_date)
+VALUES (orders_seq.NEXTVAL, 60, TO_DATE('2021-03-01', 'YYYY-MM-DD'), 'C', 120.00, TO_DATE('2021-03-02', 'YYYY-MM-DD'), TO_DATE('2021-03-03', 'YYYY-MM-DD'));
+INSERT INTO orders (id, quantity, order_date, status, total_price, shipping_date, delivery_date)
+VALUES (orders_seq.NEXTVAL, 30, TO_DATE('2021-04-01', 'YYYY-MM-DD'), 'S', 70.00, TO_DATE('2021-04-02', 'YYYY-MM-DD'), TO_DATE('2021-04-03', 'YYYY-MM-DD'));
+INSERT INTO orders (id, quantity, order_date, status, total_price, shipping_date, delivery_date)
+VALUES (orders_seq.NEXTVAL, 70, TO_DATE('2021-05-01', 'YYYY-MM-DD'), 'D', 140.00, TO_DATE('2021-05-02', 'YYYY-MM-DD'), TO_DATE('2021-05-03', 'YYYY-MM-DD'));
+
+
+
+
+INSERT INTO orderitems (id, quantity, price, product_id)
+VALUES (orderitems_seq.NEXTVAL,  15, 12.50,1);
+INSERT INTO orderitems (id, quantity, price, product_id)
+VALUES (orderitems_seq.NEXTVAL,  45, 19.99,51);
+INSERT INTO orderitems (id, quantity, price, product_id)
+VALUES (orderitems_seq.NEXTVAL,  20, 5.99,101);
+INSERT INTO orderitems (id, quantity, price, product_id)
+VALUES (orderitems_seq.NEXTVAL,  60, 50.00,151);
+INSERT INTO orderitems (id, quantity, price, product_id)
+VALUES (orderitems_seq.NEXTVAL,  100, 99.99,201);
+
+
+
+INSERT INTO users (id, first_name, last_name, email_Address, username, encoded_password, user_role, street, house_number, door_number, city, postal_code, address_type, phone_country_code, phone_area_code, phone_serial_number, phone_extension)
+VALUES (users_seq.NEXTVAL, 'MAX', 'MusterMann', 'max@mustermann.at', 'maximu', '$2a$10$WiQPUOmniCp76MLYlabQOOgylXY2hTgrVFSJd6cLR9V/wIlGNqOGW', 'A', 'Main Street', 1, 1, 'Vienna', 1010, 'BI', 43, 1, '1234567', 1);
+INSERT INTO users (id, first_name, last_name, email_Address, username, encoded_password, user_role, street, house_number, door_number, city, postal_code, address_type, phone_country_code, phone_area_code, phone_serial_number, phone_extension)
+VALUES (users_seq.NEXTVAL, 'ANNA', 'BeispielFrau', 'anna@mustermann.at', 'annam', '$2a$10$WiQPUOmniCp76MLYlabQOOgylXY2hTgrVFSJd6cLR9V/wIlGNqOGW','G', 'Baker Street', 5, 1, 'London', 5678, 'BI', 44, 2, '7654321', 1 );
+INSERT INTO users (id, first_name, last_name, email_Address, username, encoded_password, user_role, street, house_number, door_number, city, postal_code, address_type, phone_country_code, phone_area_code, phone_serial_number, phone_extension)
+VALUES (users_seq.NEXTVAL, 'LUCAS', 'BeispielMann', 'lucas@mustermann.at', 'lukky', '$2a$10$WiQPUOmniCp76MLYlabQOOgylXY2hTgrVFSJd6cLR9V/wIlGNqOGW', 'O', 'King Street', 3, 3, 'Berlin', 1111, 'DE', 49, 1, '9876543', 2 );
+INSERT INTO users (id, first_name, last_name, email_Address, username, encoded_password, user_role, street, house_number, door_number, city, postal_code, address_type, phone_country_code, phone_area_code, phone_serial_number, phone_extension)
+VALUES (users_seq.NEXTVAL, 'ELLA', 'MusterFrau', 'ella@mustermann.at', 'ellas', '$2a$10$WiQPUOmniCp76MLYlabQOOgylXY2hTgrVFSJd6cLR9V/wIlGNqOGW', 'G', 'Green Lane', 10, 2, 'Zurich', 8001, 'PR', 41, 3, '5432167', 1 );
+INSERT INTO users (id, first_name, last_name, email_Address, username, encoded_password, user_role, street, house_number, door_number, city, postal_code, address_type, phone_country_code, phone_area_code, phone_serial_number, phone_extension)
+VALUES (users_seq.NEXTVAL, 'JULIA', 'BeispielFrau', 'jullia@mustermann.at', 'julma', '$2a$10$WiQPUOmniCp76MLYlabQOOgylXY2hTgrVFSJd6cLR9V/wIlGNqOGW', 'C', 'Spengergasse', 8, 1, 'Vienna', 2000, 'BI', 31, 1, '1122334', 1);
+
+
+
+INSERT INTO product_categories (product_id, category_idx, categories_id)
+VALUES (1,1,1);
+
+INSERT INTO orders_order_items (order_items_id, orderitems_idx, order_id)
+VALUES (1,1,1);

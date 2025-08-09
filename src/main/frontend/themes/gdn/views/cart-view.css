@@ -1,0 +1,15 @@
+.red-header {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.cart-box {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+}
